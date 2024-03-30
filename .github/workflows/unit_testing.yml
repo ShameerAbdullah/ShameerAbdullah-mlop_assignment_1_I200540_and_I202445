@@ -1,0 +1,27 @@
+name: Unit Testing
+
+on:
+  pull_request:
+    branches: [test]
+
+jobs:
+  unit_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install pytest
+
+      - name: Run Unit Tests
+        run: pytest test.py
+
+      - name: Set output variable
+        id: unit-test
+        run: echo "::set-output name=unit-test-result::${?}"
