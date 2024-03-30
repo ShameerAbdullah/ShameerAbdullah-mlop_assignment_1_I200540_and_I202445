@@ -1,5 +1,4 @@
 import unittest
-from flask import Flask, jsonify
 from predict import app
 
 

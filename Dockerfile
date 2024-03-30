@@ -12,6 +12,4 @@ EXPOSE 5000
 
 COPY . ./
 
-CMD ["python", "train_model.py"]
-
-CMD ["python", "predict.py"]
+CMD ["python", "predict.py","train_model.py"]
