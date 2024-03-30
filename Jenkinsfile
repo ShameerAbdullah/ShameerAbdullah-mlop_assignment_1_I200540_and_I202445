@@ -1,28 +1,20 @@
 pipeline {
-    agent any
-    stages {
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    bat 'docker build -t gillrafay/mlops_image:latest .'
-                }
-            }
-        }
-        stage('Authenticate with Docker Hub') {
-            steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASS')]) {
-                        bat 'docker login -u %DOCKERHUB_USER% -p %DOCKERHUB_PASS%'
-                    }
-                }
-            }
-        }
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    bat 'docker push gillrafay/mlops_image:latest'
-                }
-            }
-        }
+  agent none
+  stages {
+    stage('Docker Build') {
+      agent any
+      steps {
+        sh 'docker build -t gillrafay/mlops-assignment1:latest .'
+      }
     }
+    stage('Docker Push') {
+      agent any
+      steps {
+        withCredentials([usernamePassword(credentialsId: '88c1c648-acca-4ad0-bdae-e47152cfc9af', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+          sh "docker login -u gillrafay -p ${env.dockerHubPassword}"
+          sh 'docker push gillrafay/mlops-assignment1:latest'
+        }
+      }
+    }
+  }
 }
