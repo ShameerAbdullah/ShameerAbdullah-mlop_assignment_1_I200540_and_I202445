@@ -1,4 +1,3 @@
-#testing
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -31,7 +30,7 @@ titanic_data = pd.read_csv('titanic.csv')
 # - Continuous: Handle missing values (imputation), scale if necessary
 
 # Preprocessing
-titanic_data.replace({'Sex':{'male':0,'female':1}, 'Embarked':{'S':0,'C':1,'Q':2}}, inplace=True)
+titanic_data.replace({'Sex': {'male': 0, 'female': 1}, 'Embarked': {'S': 0, 'C': 1, 'Q': 2}}, inplace=True)
 
 # Duplicate the dataset
 titanic_data_unprocessed = titanic_data.copy()
@@ -41,8 +40,6 @@ titanic_data = titanic_data.drop(columns='Cabin', axis=1)
 titanic_data['Age'].fillna(titanic_data['Age'].mean(), inplace=True)
 
 titanic_data['Embarked'].fillna(titanic_data['Embarked'].mode()[0], inplace=True)
-
-
 
 # Duplicate the dataset
 titanic_data_unprocessed = titanic_data.copy()
@@ -85,9 +82,9 @@ titanic_data[numeric_cols] = scaler.fit_transform(titanic_data[numeric_cols])
 
 # 5. Classification:
 # Split data into train and test sets
-X_processed  = titanic_data.drop(columns=['PassengerId', 'Name', 'Ticket', 'Survived'], axis=1)
-Y_processed  = titanic_data['Survived']
-X_train_processed, X_test_processed, Y_train_processed, Y_test_processed  = train_test_split(X_processed, Y_processed , test_size=0.2, random_state=2)
+X_processed = titanic_data.drop(columns=['PassengerId', 'Name', 'Ticket', 'Survived'], axis=1)
+Y_processed = titanic_data['Survived']
+X_train_processed, X_test_processed, Y_train_processed, Y_test_processed = train_test_split(X_processed, Y_processed, test_size=0.2, random_state=2)
 
 # Initialize models
 models = {
