@@ -7,8 +7,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
-from task import evaluate_model
+from sklearn.metrics import accuracy_score
 
 class TestModels(unittest.TestCase):
     def setUp(self):
@@ -16,7 +15,7 @@ class TestModels(unittest.TestCase):
         self.titanic_data = pd.read_csv('titanic.csv')
 
         # Preprocess data
-        self.titanic_data.replace({'Sex':{'male':0,'female':1}, 'Embarked':{'S':0,'C':1,'Q':2}}, inplace=True)
+        self.titanic_data.replace({'Sex': {'male': 0, 'female': 1}, 'Embarked': {'S': 0, 'C': 1, 'Q': 2}}, inplace=True)
         self.titanic_data = self.titanic_data.drop(columns='Cabin', axis=1)
         self.titanic_data['Age'].fillna(self.titanic_data['Age'].mean(), inplace=True)
         self.titanic_data['Embarked'].fillna(self.titanic_data['Embarked'].mode()[0], inplace=True)
