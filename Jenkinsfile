@@ -2,14 +2,14 @@ pipeline {
     agent any
     
     environment {
-        DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
-        IMAGE_NAME = 'your-docker-username/your-image-name'
+        DOCKER_CREDENTIALS_ID = 'desktop'
+        IMAGE_NAME = 'shameer6749/mlopsa1'
     }
     
     stages {
         stage('Checkout') {
             steps {
-                git credentialsId: 'github-credentials', url: 'https://github.com/yourusername/your-repo.git'
+                git credentialsId: 'github-credentials', url: 'https://github.com/ShameerAbdullah/ShameerAbdullah-mlop_assignment_1_I200540_and_I202445.git'
             }
         }
         
@@ -22,6 +22,7 @@ pipeline {
         stage('Unit Testing') {
             steps {
                 // Execute unit tests here
+                sh 'pytest'
             }
         }
         
@@ -72,7 +73,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                emailext body: 'Jenkins job completed successfully. Image pushed to Docker Hub.', subject: 'CI/CD Pipeline Status', to: 'admin@example.com'
+                emailext body: 'Jenkins job completed successfully. Image pushed to Docker Hub.', subject: 'CI/CD Pipeline Status', to: 'shameerabdullah.sa7@gmail.com'
             }
         }
     }
