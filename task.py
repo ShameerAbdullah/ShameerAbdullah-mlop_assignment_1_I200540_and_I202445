@@ -1,7 +1,6 @@
-import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 import seaborn as sns
+import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
@@ -9,7 +8,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from sklearn.metrics import accuracy_score
 
 # Load the dataset
 titanic_data = pd.read_csv('titanic.csv')
@@ -100,32 +99,21 @@ def evaluate_model(model, X_train, Y_train, X_test, Y_test):
     # Evaluate on training set
     train_predictions = model.predict(X_train)
     train_accuracy = accuracy_score(Y_train, train_predictions)
-    train_confusion_matrix = confusion_matrix(Y_train, train_predictions)
-    train_classification_report = classification_report(Y_train, train_predictions)
 
     # Evaluate on test set
     test_predictions = model.predict(X_test)
     test_accuracy = accuracy_score(Y_test, test_predictions)
-    test_confusion_matrix = confusion_matrix(Y_test, test_predictions)
-    test_classification_report = classification_report(Y_test, test_predictions)
 
-    # Display evaluation results
-    print("Training Set:")
-    print("Accuracy:", train_accuracy)
-    print("Confusion Matrix:\n", train_confusion_matrix)
-    print("Classification Report:\n", train_classification_report)
-
-    print("\nTest Set:")
-    print("Accuracy:", test_accuracy)
-    print("Confusion Matrix:\n", test_confusion_matrix)
-    print("Classification Report:\n", test_classification_report)
+    return train_accuracy, test_accuracy
 
 # Train and evaluate models
 for name, model in models.items():
     model.fit(X_train_processed, Y_train_processed)
+    train_acc, test_acc = evaluate_model(model, X_train_processed, Y_train_processed, X_test_processed, Y_test_processed)
     print(f"Evaluation on {name}:")
-    evaluate_model(model, X_train_processed, Y_train_processed, X_test_processed, Y_test_processed)
-    print("\n\n")
+    print("Training Accuracy:", train_acc)
+    print("Test Accuracy:", test_acc)
+    print("\n")
 
 # Train and evaluate models on unprocessed data
 X_unprocessed = titanic_data_unprocessed.drop(columns=['PassengerId', 'Name', 'Ticket', 'Survived'], axis=1)
@@ -135,6 +123,8 @@ X_train_unprocessed, X_test_unprocessed, Y_train_unprocessed, Y_test_unprocessed
 # Train and evaluate models on unprocessed data
 for name, model in models.items():
     model.fit(X_train_unprocessed, Y_train_unprocessed)
+    train_acc, test_acc = evaluate_model(model, X_train_unprocessed, Y_train_unprocessed, X_test_unprocessed, Y_test_unprocessed)
     print(f"Evaluation on {name} (Unprocessed Data):")
-    evaluate_model(model, X_train_unprocessed, Y_train_unprocessed, X_test_unprocessed, Y_test_unprocessed)
-    print("\n\n")
+    print("Training Accuracy:", train_acc)
+    print("Test Accuracy:", test_acc)
+    print("\n")
