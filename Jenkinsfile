@@ -15,14 +15,14 @@ pipeline {
         
         stage('Code Quality Check') {
             steps {
-                sh 'flake8 .'
+                bat 'flake8 .'
             }
         }
         
         stage('Unit Testing') {
             steps {
-                // Execute unit tests heres
-                sh 'pytest'
+                // Execute unit tests here
+                bat 'pytest'
             }
         }
         
@@ -31,9 +31,9 @@ pipeline {
                 branch 'dev'
             }
             steps {
-                sh 'git checkout test'
-                sh 'git merge origin/dev'
-                sh 'git push origin test'
+                bat 'git checkout test'
+                bat 'git merge origin/dev'
+                bat 'git push origin test'
             }
         }
         
@@ -43,9 +43,9 @@ pipeline {
             }
             steps {
                 script {
-                    def merged = sh(script: 'git merge --no-ff origin/test', returnStatus: true)
+                    def merged = bat(script: 'git merge --no-ff origin/test', returnStatus: true)
                     if (merged == 0) {
-                        sh 'git push origin master'
+                        bat 'git push origin master'
                     } else {
                         currentBuild.result = 'FAILURE'
                         error "Merge to master failed"
