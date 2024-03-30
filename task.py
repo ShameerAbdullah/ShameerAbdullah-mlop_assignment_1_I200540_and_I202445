@@ -10,29 +10,32 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 
+
 """Load the dataset"""
 
 titanic_data = pd.read_csv('titanic.csv')
 
-"""1. Data Analysis & Preprocessing:<br>
-Identify attribute types<br>
-- Ordinal: Pclass<br>
-- Nominal: Sex, Embarked<br>
-- Binary: Survived<br>
-- Discrete: SibSp, Parch<br>
+
+"""1. Data Analysis & Preprocessing:
+Identify attribute types
+- Ordinal: Pclass
+- Nominal: Sex, Embarked
+- Binary: Survived
+- Discrete: SibSp, Parch
 - Continuous: Age, Fare
 
-Justify preprocessing steps:<br>
-- Ordinal: No preprocessing needed<br>
-- Nominal: Convert to numerical using one-hot encoding<br>
-- Binary: No preprocessing needed<br>
-- Discrete: No preprocessing needed<br>
+Justify preprocessing steps:
+- Ordinal: No preprocessing needed
+- Nominal: Convert to numerical using one-hot encoding
+- Binary: No preprocessing needed
+- Discrete: No preprocessing needed
 - Continuous: Handle missing values (imputation), scale if necessary
 
 Preprocessing
 """
 
 titanic_data.replace({'Sex': {'male': 0, 'female': 1}, 'Embarked': {'S': 0, 'C': 1, 'Q': 2}}, inplace=True)
+
 
 """Duplicate the dataset"""
 
@@ -48,7 +51,8 @@ titanic_data['Embarked'].fillna(titanic_data['Embarked'].mode()[0], inplace=True
 
 titanic_data_unprocessed = titanic_data.copy()
 
-"""2. Data Visualization:<br>
+
+"""2. Data Visualization:
 Basic count plots
 """
 
@@ -76,14 +80,14 @@ sns.boxplot(x='Survived', y='Age', data=titanic_data)
 plt.title('Age Distribution by Survival')
 plt.show()
 
-"""3. Data Cleaning:<br>
+"""3. Data Cleaning:
 Handle outliers
 """
 
 outliers = titanic_data[(titanic_data['Age'] > 70) | (titanic_data['Fare'] > 100)]
 titanic_data = titanic_data.drop(outliers.index)
 
-"""4. Data Transformation:<br>
+"""4. Data Transformation:
 Scale numerical features
 """
 
@@ -91,7 +95,7 @@ numeric_cols = ['Age', 'Fare']
 scaler = StandardScaler()
 titanic_data[numeric_cols] = scaler.fit_transform(titanic_data[numeric_cols])
 
-"""5. Classification:<br>
+"""5. Classification:
 Split data into train and test sets
 """
 
