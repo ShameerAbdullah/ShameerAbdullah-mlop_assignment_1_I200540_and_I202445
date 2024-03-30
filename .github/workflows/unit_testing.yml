@@ -17,7 +17,6 @@ jobs:
           python-version: '3.x'
 
       - name: Install dependencies
-        # run: pip install -r requirements.txt
         run: pip install pytest
 
       - name: Run Unit Tests
@@ -26,35 +25,3 @@ jobs:
       - name: Set output variable
         id: unit-test
         run: echo "::set-output name=unit-test-result::${?}"
-
-  merge:
-    needs: unit_test
-    runs-on: ubuntu-latest
-    if: ${{ needs.unit_test.outputs.unit-test-result == '0' }}
-    steps:
-      - uses: actions/checkout@master
-
-      - name: Merge dev -> test
-        uses: devmasx/merge-branch@master
-        with:
-          type: now
-          target_branch: test
-          message: Merge dev into test
-          # github_token: ${{ secrets.GITHUB_TOKEN }}
-
-  # merge:
-  #   needs: unit_test
-  #   runs-on: ubuntu-latest
-  #   if: ${{ needs.unit_test.outputs.unit-test-result == '0' }}
-  #   steps:
-  #     - name: Install GitHub CLI
-  #       run: |
-  #         sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
-  #         sudo apt-add-repository https://cli.github.com/packages
-  #         sudo apt update
-  #         sudo apt install gh
-
-  #     - name: Merge Pull Request
-  #       run: |
-  #         gh auth login --with-token ${{ secrets.GH_PAT }}
-  #         gh pr merge ${{ github.event.number }} --merge --auto
