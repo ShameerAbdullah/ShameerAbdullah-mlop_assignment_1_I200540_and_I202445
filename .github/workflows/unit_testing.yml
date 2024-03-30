@@ -40,7 +40,7 @@ jobs:
           type: now
           target_branch: test
           message: Merge dev into test
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # github_token: ${{ secrets.GITHUB_TOKEN }}
 
   # merge:
   #   needs: unit_test
