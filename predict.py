@@ -6,7 +6,7 @@ warnings.filterwarnings("ignore", message="Invalid feature names.*")
 
 app = Flask(__name__)
 
-# Load the trained model
+# Load the trained mode
 model = joblib.load('trained_model.pkl')
 
 
