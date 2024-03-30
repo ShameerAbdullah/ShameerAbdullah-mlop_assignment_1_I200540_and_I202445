@@ -73,7 +73,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                emailext body: 'Jenkins job completed successfully. Image pushed to Docker Hub.', subject: 'CI/CD Pipeline Status', to: 'shameerabdullah.sa7@gmail.com'
+                emailext body: 'Jenkins job completed successfully! Image pushed to Docker Hub.', subject: 'CI/CD Pipeline Status', to: 'shameerabdullah.sa7@gmail.com'
             }
         }
     }
