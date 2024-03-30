@@ -1,13 +1,28 @@
 pipeline {
     agent any
+
     stages {
-        stage('Build Docker Image') {
+        stage('Build') {
             steps {
-                script {
-                    bat 'docker build -t gillrafay/mlops_image:latest .'
-                }
-            }
+                echo 'This is a Build step'
+            } 
         }
+        stage ('Test') {
+            steps {
+                echo 'This is a Test Step' 
+            }
+        } 
+    }
+
+    
+    // stages {
+    //     stage('Build Docker Image') {
+    //         steps {
+    //             script {
+    //                 bat 'docker build -t gillrafay/mlops_image:latest .'
+    //             }
+    //         }
+    //     }
         // stage('Authenticate with Docker Hub') {
         //     steps {
         //         script {
