@@ -1,6 +1,9 @@
 import unittest
 import pandas as pd
-from main_script import evaluate_model
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from task import evaluate_model
+
 
 class TestModelEvaluation(unittest.TestCase):
     def setUp(self):
@@ -28,6 +31,7 @@ class TestModelEvaluation(unittest.TestCase):
         self.assertLessEqual(train_acc, 1.0)
         self.assertGreaterEqual(test_acc, 0.0)
         self.assertLessEqual(test_acc, 1.0)
+
 
 if __name__ == '__main__':
     unittest.main()
